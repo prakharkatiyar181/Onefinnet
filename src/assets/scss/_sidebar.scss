@@ -1,0 +1,324 @@
+.side-bar {
+  position: relative;
+  width: 264px;
+
+  padding-right: 1px;
+  background: $theme-grey-white;
+  border-right: none;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.2) 33%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: right;
+  background-size: 1.4px 10px;
+  background-repeat: repeat-y;
+
+  transition: width 0.3s ease; /* Add transition property for smooth width changes */
+
+  .switch {
+    position: absolute;
+    z-index: 1;
+    right: -16px;
+    cursor: pointer;
+    bottom: 10px;
+    .switch-icon {
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top: 24%;
+      left: 24%;
+      bottom: 0;
+    }
+  }
+  .expended-view {
+    height: calc(100vh - 54px);
+    overflow-y: scroll;
+    position: relative;
+    .item {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding-top: 20px;
+      width: 263px;
+      overflow-x: hidden;
+      &_::-webkit-scrollbar {
+        width: none;
+        width: 0px;
+      }
+
+      .top-head {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-left: 40px;
+        height: 55px;
+        width: 263px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        color: rgba(33, 33, 33, 0.6);
+        cursor: pointer;
+        .icons {
+          width: 24px;
+          height: 24px;
+          color: rgba(33, 33, 33, 0.6);
+        }
+
+        a {
+          text-decoration: none;
+          font-size: 18px;
+          font-weight: 500;
+          color: rgba(33, 33, 33, 0.6);
+          cursor: pointer;
+        }
+      }
+      .top-head:hover {
+        //border-right: 4px solid #0034bb;
+        background: rgba(0, 52, 187, 0.1);
+        color: $theme-info;
+        .icons {
+          color: $theme-info;
+        }
+        a {
+          color: $theme-info;
+        }
+      }
+      .active {
+        border-right: 4px solid #0034bb;
+        background: rgba(0, 52, 187, 0.1);
+        color: $theme-info;
+        .icons {
+          color: $theme-info;
+        }
+        a {
+          color: $theme-info;
+        }
+      }
+      .menu {
+        box-shadow: none !important;
+        border: none !important;
+        margin-bottom: 0px;
+        min-width: 280px;
+
+        ::before {
+          height: 0px !important;
+        }
+        .list {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          padding: 0px;
+
+          .a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba($theme-text, 0.6);
+            padding: 8px 40px;
+            padding-left: 77px;
+
+            cursor: pointer;
+          }
+          .a:hover {
+            padding: 8px 38px;
+            padding-left: 77px;
+            background: rgba(0, 52, 187, 0.1);
+            color: $theme-info;
+          }
+          .active1 {
+            border-right: 4px solid #0034bb;
+            background: rgba(0, 52, 187, 0.1);
+            color: $theme-info;
+          }
+        }
+        .MuiButtonBase-root {
+          padding-left: 40px;
+          width: 264px;
+          padding-right: 10px;
+          .MuiAccordionSummary-content {
+            width: 100px;
+            .title-head {
+              display: flex;
+              align-items: center;
+              gap: 15px;
+              width: 150px;
+
+              .icons {
+                width: 24px;
+                height: 24px;
+                color: rgba(33, 33, 33, 0.6);
+              }
+              text-decoration: none;
+              font-size: 18px;
+              font-weight: 500;
+              color: rgba(33, 33, 33, 0.6);
+              cursor: pointer;
+            }
+          }
+        }
+        .MuiButtonBase-root:hover {
+          background: rgba(0, 52, 187, 0.1);
+          .MuiAccordionSummary-content {
+            .title-head {
+              .icons {
+                color: $theme-info;
+              }
+
+              color: $theme-info;
+            }
+          }
+        }
+
+        .Mui-expanded {
+          color: $theme-info;
+
+          align-items: flex-start;
+          min-height: 30px;
+          gap: 20px;
+
+          .MuiAccordionSummary-content {
+            .title-head {
+              display: flex;
+              align-items: center;
+              gap: 15px;
+
+              .icons {
+                width: 24px;
+                height: 24px;
+                color: $theme-info;
+              }
+
+              text-decoration: none;
+              font-size: 18px;
+              font-weight: 500;
+              color: $theme-info;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .menu:before {
+        height: 0px !important;
+      }
+    }
+    .request-credit-card {
+      position: absolute;
+      width: 225px;
+      left: 24px;
+      bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: linear-gradient(
+        129deg,
+        #e1edff -5.19%,
+        rgba(255, 255, 255, 0.8) 54.83%,
+        #c7d7ff 122.81%
+      );
+      padding: 20px;
+      .title {
+        font-size: 18px;
+        color: $theme-secondary;
+        font-weight: 500;
+        span {
+          color: $theme-info;
+        }
+      }
+      .sub-title {
+        color: rgba($theme-text, 0.7);
+        font-size: 14px;
+        font-weight: 400;
+        margin-top: 14px;
+      }
+      .request-button {
+        margin-top: 20px;
+        width: 198px;
+        height: 37px;
+        border-radius: 8px;
+        overflow: clip;
+        position: relative;
+        .request-content {
+          width: 198px;
+          height: 30px;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          width: 100%;
+        }
+        .sent-content {
+          width: 198px;
+          height: 37px;
+          background: #2159ec;
+          width: 100%;
+          left: 0px;
+          top: 0px;
+          transform: translateX(-200px);
+          position: absolute;
+          overflow: clip;
+
+          .content-wrapper {
+            display: flex;
+            height: 37px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            transform: translateY(-30px);
+            overflow: clip;
+
+            .sparkle-animation-wrapper {
+              width: 162px;
+              height: 162px;
+              position: absolute;
+              left: 15px;
+              top: 0px;
+              transform: translateY(-50%);
+            }
+          }
+        }
+        &.animate {
+          .sent-content {
+            animation-name: sent-content;
+            animation-duration: 800ms;
+            animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
+
+            .content-wrapper {
+              animation-name: sent-content-wrapper;
+              animation-delay: 900ms;
+              animation-duration: 500ms;
+              animation-timing-function: ease-out;
+              animation-fill-mode: forwards;
+            }
+          }
+        }
+      }
+      @keyframes sent-content {
+        100% {
+          transform: translateX(0px);
+        }
+      }
+      @keyframes sent-content-wrapper {
+        0% {
+          transform: translateY(-25px);
+        }
+        100% {
+          transform: translateY(0px);
+          background: #506fbf;
+        }
+      }
+    }
+    @media (max-height: 800px) {
+      .request-credit-card {
+        position: static;
+        margin-left: 15px;
+        margin-top: 15px;
+        .sub-title {
+          display: none;
+        }
+      }
+    }
+  }
+  .expended-view::-webkit-scrollbar {
+    width: 0px;
+  }
+}

@@ -1,21 +1,20 @@
   import React from 'react';
-  import { Container, Row, Col } from 'react-bootstrap';
-  import NavbarComponent from './components/NavbarComponent';
+  import Header from './components/Header';
   import Sidebar from './components/NewSidebar';
   import Dashboard from './components/Dashboard';
   import './App.scss';
 
   const App = () => {
     return (
-      <>
-        <NavbarComponent />
-        <div className="d-flex">
+      <div className='layout'>
+        <Header />
+        <div className="page">
           <Sidebar />
-          <div className="flex-grow-1 ms-3" style={{ marginTop: '56px' }}>
+          <div className="page-right" style={{ marginTop: '56px' }}>
             <Dashboard />
           </div>
         </div>
-      </>
+      </div>
     );
   };
 
