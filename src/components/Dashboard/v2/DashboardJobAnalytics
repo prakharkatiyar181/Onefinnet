@@ -3,114 +3,20 @@ import { Button, Stack } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import {
-  RecentCandidates,
-  TopJob
-} from "../../../redux/slices/dashboardSlices/getDashboardHomeSlice";
-import EcnStyledDataGrid from "../../StyledComponents/V2/EcnStyledDataGrid";
 
 const headerTextStyle = {
-  color: "#121619 !important",
+  color: "#121619",
   fontSize: "14px",
-  fontWeight: "500"
+  fontWeight: "500",
 };
 
 const colors = ["#75DEFF", "#72A2FF", "#8A6DFF"];
 
-const columns: any = [
-  {
-    field: "name",
-    headerName: "Candidate name",
-    width: 190,
-
-    renderHeader: () => (
-      <Stack direction="row" alignItems="left">
-        <p style={headerTextStyle}>Candidate name</p>
-      </Stack>
-    ),
-    renderCell: (params: any) => {
-      return (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            cursor: "pointer"
-          }}
-        >
-          <div className="row-index">{(params?.row?.index || 0) + 1}</div>
-          <Stack direction="column" spacing={0.8}>
-            <div className="name">
-              {params?.row?.first_name + " " + params?.row?.last_name}
-            </div>
-            <div className="email">{params?.row?.email}</div>
-          </Stack>
-        </div>
-      );
-    }
-  },
-  {
-    field: "job_name",
-    headerName: "Job Name",
-    width: 170,
-    renderHeader: () => (
-      <Stack direction="row" alignItems="left">
-        <p style={headerTextStyle}>Job Name</p>
-      </Stack>
-    ),
-    renderCell: (params: any) => (
-      <Stack direction="row" spacing={1}>
-        <>
-          <p style={{ fontSize: 12 }}>{params.row.job_name}</p>
-        </>
-      </Stack>
-    )
-  },
-  {
-    field: "ai_rating",
-    headerName: "AI Rating",
-    width: 100,
-    renderHeader: () => (
-      <Stack direction="row" alignItems="center" gap={0.3}>
-        <p style={headerTextStyle}>AI Rating</p>
-      </Stack>
-    ),
-    renderCell: (params: any) => (
-      <Stack direction="row" spacing={1}>
-        <p>{params.row.ai_rating}</p>
-      </Stack>
-    )
-  },
-  {
-    field: "applied_date",
-    headerName: "Applied Date",
-    width: 150,
-    renderHeader: () => (
-      <Stack direction="row" alignItems="left">
-        <p style={headerTextStyle}>Applied Date</p>
-      </Stack>
-    ),
-    renderCell: (params: any) => (
-      <Stack direction="row" spacing={1}>
-        {moment.unix(params?.row?.applied_date).format("Do MMM YY")}
-      </Stack>
-    )
-  }
-];
-
-const DashboardJobAnalytics = ({
-  recentCandidates,
-  topJobs
-}: {
-  recentCandidates?: RecentCandidates[];
-  topJobs?: TopJob[];
-}) => {
+const DashboardJobAnalytics = ({ recentCandidates = [], topJobs = [] }) => {
   const navigate = useNavigate();
-  const rowsWithIndex = recentCandidates
-    ? recentCandidates.map((candidate, index) => ({ ...candidate, index }))
-    : [];
+  const rowsWithIndex = recentCandidates.map((candidate, index) => ({ ...candidate, index }));
 
-  const isBarDataAvailable = topJobs !== undefined;
+  const isBarDataAvailable = topJobs.length > 0;
 
   const responsiveBarData = isBarDataAvailable
     ? topJobs.map((job, index) => ({
@@ -119,19 +25,12 @@ const DashboardJobAnalytics = ({
         Reviewed: job.total_applicants - job.total_applicants_not_reviewed,
         "Not Reviewed": job.total_applicants_not_reviewed,
         "Not ReviewedColor": "rgba(238, 238, 238, 1)",
-        ReviewedColor: colors[index % 3]
+        ReviewedColor: colors[index % 3],
       }))
     : emptyBarData;
-  const dataLen = responsiveBarData.length;
 
-  if (dataLen > 3) {
-    responsiveBarData.splice(dataLen - 2, 3);
-  }
-
-  const handleOnCellClick = (params: any) => {
-    if (params.field === "name") {
-      navigate(/candidates/details?id=${params.id});
-    }
+  const handleOnRowClick = (applicationId) => {
+    navigate(`/candidates/details?id=${applicationId}`);
   };
 
   return (
@@ -142,30 +41,43 @@ const DashboardJobAnalytics = ({
           <Button
             className="draft-mail-button"
             variant="text"
-            onClick={() => {
-              navigate("/mails?view=compose");
-            }}
+            onClick={() => navigate("/mails?view=compose")}
           >
             Mail Candidates
             <Icon icon="lucide:chevron-right" width={20} height={20} />
           </Button>
         </div>
         {rowsWithIndex.length > 0 ? (
-          <EcnStyledDataGrid
-            className="latest-candidates-table"
-            columns={columns}
-            rows={rowsWithIndex}
-            disableColumnMenu
-            checkboxSelection={false}
-            onCellClick={handleOnCellClick}
-            getRowId={(props: any) => props.application_id}
-          />
+          <table className="latest-candidates-table">
+            <thead>
+              <tr>
+                <th>Candidate Name</th>
+                <th>Job Name</th>
+                <th>AI Rating</th>
+                <th>Applied Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rowsWithIndex.map((row) => (
+                <tr
+                  key={row.application_id}
+                  onClick={() => handleOnRowClick(row.application_id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <td>{row.first_name + " " + row.last_name}</td>
+                  <td>{row.job_name}</td>
+                  <td>{row.ai_rating}</td>
+                  <td>{moment.unix(row.applied_date).format("Do MMM YY")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <div className="latest-candidates-table-empty">
             <img
               src="https://s1.ecnstatic.com/ecn/images/enterprise/urban-no-data-found.png"
               className="urban-no-data-found"
-              alt="Placeholder"
+              alt="No data"
             />
             <div className="text">No recent candidates</div>
           </div>
@@ -174,29 +86,15 @@ const DashboardJobAnalytics = ({
       <div className="job-postings">
         <div className="data-container-title">
           <h2>Your Job Postings</h2>
-          <Button
-            className="draft-mail-button"
-            variant="text"
-            onClick={() => {
-              navigate("/jobs");
-            }}
-          >
+          <Button className="draft-mail-button" variant="text" onClick={() => navigate("/jobs")}>
             View All Jobs
             <Icon icon="lucide:chevron-right" width={20} height={20} />
           </Button>
         </div>
-        <div
-          style={{
-            width: 441,
-            height: isBarDataAvailable ? 351 : 370
-          }}
-        >
+        <div style={{ width: 441, height: isBarDataAvailable ? 351 : 370 }}>
           <ResponsiveBar
             margin={{ left: 10, right: 10, bottom: 80 }}
-            colors={({ data, id }) => {
-              //@ts-ignore
-              return String(data[${id}Color]);
-            }}
+            colors={({ data, id }) => String(data[`${id}Color`])}
             enableLabel={false}
             enableGridY={false}
             enableGridX={true}
@@ -214,7 +112,7 @@ const DashboardJobAnalytics = ({
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legendOffset: 32
+              legendOffset: 32,
             }}
             isInteractive={isBarDataAvailable}
             data={responsiveBarData}
@@ -222,14 +120,12 @@ const DashboardJobAnalytics = ({
         </div>
         {isBarDataAvailable && (
           <div className="legend-container">
-            {responsiveBarData.map((job) => {
-              return (
-                <div className="legend">
-                  <div className="color" />
-                  <div className="job-name">{job.job_name.split("-")[0]}</div>
-                </div>
-              );
-            })}
+            {responsiveBarData.map((job) => (
+              <div className="legend" key={job.job_id}>
+                <div className="color" style={{ backgroundColor: job.ReviewedColor }} />
+                <div className="job-name">{job.job_name.split("-")[0]}</div>
+              </div>
+            ))}
           </div>
         )}
       </div>
@@ -244,7 +140,7 @@ const emptyBarData = [
     Reviewed: 200,
     ReviewedColor: "rgba(238, 238, 238, 0)",
     "Not Reviewed": 0,
-    "Not ReviewedColor": colors[0]
+    "Not ReviewedColor": colors[0],
   },
   {
     job_id: "2",
@@ -252,7 +148,7 @@ const emptyBarData = [
     Reviewed: 200,
     ReviewedColor: "rgba(238, 238, 238, 0)",
     "Not Reviewed": 0,
-    "Not ReviewedColor": colors[0]
+    "Not ReviewedColor": colors[0],
   },
   {
     job_id: "3",
@@ -260,8 +156,8 @@ const emptyBarData = [
     Reviewed: 200,
     ReviewedColor: "rgba(238, 238, 238, 0)",
     "Not Reviewed": 0,
-    "Not ReviewedColor": colors[0]
-  }
+    "Not ReviewedColor": colors[0],
+  },
 ];
 
 export default DashboardJobAnalytics;

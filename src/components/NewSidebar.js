@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import {
   Accordion,
@@ -6,23 +6,33 @@ import {
   AccordionSummary,
   Button,
   Menu,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../redux/hooks";
 import Lottie from "react-lottie";
-import SparkleAnimation from "../../assets/lottie/sparkle.json";
+import SparkleAnimation from "../assets/lottie/sparkle.json";
 
 const NewSideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const disableAnimation = false;
-  const { userInfo, loading } = useAppSelector((state) => state.userDetails);
-
+  const [userInfo, setUserInfo] = useState({ roles: [] });
+  const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
+
+  const fetchUserInfo = async () => {
+    // Replace with actual API call to fetch user information
+    const response = await fetch("/api/user-info");
+    const data = await response.json();
+    setUserInfo(data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   const activeHandler = () => {
     setActive(!active);
@@ -39,11 +49,11 @@ const NewSideBar = () => {
       {!active ? (
         <div className="expended-view">
           <div className="item">
-            {url?.map((item: any) =>
-              item?.subLink.length === 0 ? (
-                item?.urlLink === "/permission" ? (
-                  (userInfo?.roles?.includes("enterprise-admin") ||
-                    userInfo?.roles?.includes("recruiter-admin")) && (
+            {url.map((item) =>
+              item.subLink.length === 0 ? (
+                item.urlLink === "/permission" ? (
+                  (userInfo.roles.includes("enterprise-admin") ||
+                    userInfo.roles.includes("recruiter-admin")) && (
                     <Link
                       to={item.urlLink}
                       className={
@@ -52,8 +62,8 @@ const NewSideBar = () => {
                           : "top-head"
                       }
                     >
-                      {item?.icon}
-                      {item?.title}
+                      {item.icon}
+                      {item.title}
                     </Link>
                   )
                 ) : (
@@ -71,8 +81,8 @@ const NewSideBar = () => {
                         : "top-head"
                     }
                   >
-                    {item?.icon}
-                    {item?.title}
+                    {item.icon}
+                    {item.title}
                   </Link>
                 )
               ) : (
@@ -80,8 +90,8 @@ const NewSideBar = () => {
                   className="menu"
                   disableGutters={true}
                   defaultExpanded={
-                    item?.subLink
-                      ?.map((ind: any) => ind?.linkTitleUrl)
+                    item.subLink
+                      ?.map((ind) => ind.linkTitleUrl)
                       .includes(location.pathname) ||
                     location.pathname === "/users/user" ||
                     location.pathname === "/mails/template"
@@ -99,12 +109,12 @@ const NewSideBar = () => {
                           : "title-head"
                       }
                     >
-                      {item?.icon}
-                      {item?.title}
+                      {item.icon}
+                      {item.title}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails className={"list "}>
-                    {item?.subLink?.map((link: any) => (
+                    {item.subLink.map((link) => (
                       <Link
                         to={link.linkTitleUrl}
                         className={
@@ -117,7 +127,7 @@ const NewSideBar = () => {
                             : "a"
                         }
                       >
-                        {link?.linkTitle}
+                        {link.linkTitle}
                       </Link>
                     ))}
                   </AccordionDetails>
@@ -137,16 +147,16 @@ const NewSideBar = () => {
         </div>
       ) : (
         <div className="collapse-view">
-          {url?.map((item: any) =>
-            item?.subLink?.length === 0 ? (
+          {url.map((item) =>
+            item.subLink.length === 0 ? (
               <p
                 className={
-                  location.pathname === item?.urlLink
+                  location.pathname === item.urlLink
                     ? "top-head active"
                     : "top-head"
                 }
               >
-                <Link to={item.urlLink}>{item?.icon}</Link>
+                <Link to={item.urlLink}>{item.icon}</Link>
               </p>
             ) : (
               <>
@@ -158,7 +168,7 @@ const NewSideBar = () => {
                   onClick={handleClick}
                   className={openMenu ? "button-icon active" : "button-icon"}
                 >
-                  {item?.icon}
+                  {item.icon}
                 </p>
                 <Menu
                   id="demo-positioned-menu"
@@ -169,26 +179,26 @@ const NewSideBar = () => {
                   onClose={menuHandleClose}
                   anchorOrigin={{
                     vertical: "center",
-                    horizontal: "right"
+                    horizontal: "right",
                   }}
                   transformOrigin={{
                     vertical: "center",
-                    horizontal: "right"
+                    horizontal: "right",
                   }}
                   PaperProps={{
                     style: {
-                      marginLeft: "40px"
-                    }
+                      marginLeft: "40px",
+                    },
                   }}
                 >
-                  {item?.subLink?.map((link: any) => (
+                  {item.subLink.map((link) => (
                     <MenuItem
                       className={
-                        location.pathname === link?.linkTitleUrl ? "active" : ""
+                        location.pathname === link.linkTitleUrl ? "active" : ""
                       }
-                      onClick={() => navigate(${link?.linkTitleUrl})}
+                      onClick={() => navigate(link.linkTitleUrl)}
                     >
-                      <p>{link?.linkTitle}</p>
+                      <p>{link.linkTitle}</p>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -232,18 +242,16 @@ const url = [
     title: "Home",
     subLink: [],
     icon: <Icon icon="lucide:home" className="icons" />,
-    urlLink: "/dashboard"
+    urlLink: "/dashboard",
   },
-
   {
     title: "Jobs",
     subLink: [],
     icon: (
       <Icon icon="lucide:briefcase" className="icons" width={20} height={20} />
     ),
-    urlLink: "/jobs"
+    urlLink: "/jobs",
   },
-
   {
     title: "Events",
     subLink: [],
@@ -255,23 +263,22 @@ const url = [
         height={20}
       />
     ),
-    urlLink: "/events"
+    urlLink: "/events",
   },
   {
     title: "Mail",
     subLink: [
       {
         linkTitle: "Mail",
-        linkTitleUrl: "/mails?view=inbox"
+        linkTitleUrl: "/mails?view=inbox",
       },
       {
         linkTitle: "Template",
-        linkTitleUrl: "/mails/template?view=list"
-      }
+        linkTitleUrl: "/mails/template?view=list",
+      },
     ],
-    icon: <Icon icon="lucide:mail" className="icons" width={20} height={20} />
+    icon: <Icon icon="lucide:mail" className="icons" width={20} height={20} />,
   },
-
   {
     title: "Analytics",
     subLink: [],
@@ -283,9 +290,10 @@ const url = [
         height={20}
       />
     ),
-    urlLink: "/analytics"
-  }
+    urlLink: "/analytics",
+  },
 ];
+
 const RequestCreditButton = () => {
   const [animate, setAnimate] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
@@ -300,7 +308,7 @@ const RequestCreditButton = () => {
 
   return (
     <Button
-      className={request-button ${animate ? "animate" : ""}}
+      className={`request-button ${animate ? "animate" : ""}`}
       variant="contained"
       onClick={() => {
         setAnimate(true);
@@ -321,16 +329,16 @@ const RequestCreditButton = () => {
                   loop: false,
                   animationData: SparkleAnimation,
                   rendererSettings: {
-                    preserveAspectRatio: "xMidYMid slice"
-                  }
+                    preserveAspectRatio: "xMidYMid slice",
+                  },
                 }}
                 eventListeners={[
                   {
                     eventName: "complete",
                     callback: () => {
                       setShowAnimation(false);
-                    }
-                  }
+                    },
+                  },
                 ]}
                 height={162}
                 width={162}
@@ -340,5 +348,5 @@ const RequestCreditButton = () => {
         </div>
       </div>
     </Button>
-  );
+  );
 };

@@ -1,3 +1,4 @@
+@import './variables';
 .dashboard {
   padding: 30px;
 
@@ -17,6 +18,7 @@
         position: relative;
         z-index: 1;
       }
+      
       .wave-image {
         position: absolute;
         top: -50px;
@@ -32,9 +34,10 @@
       margin-top: -137px;
       margin-left: 35px;
       padding-right: 35px;
+
       .feature {
         border-radius: 10px;
-        // height: 230px;
+        // Removed the commented line that caused issues
         border: 1px solid rgba($theme-text, 0.2);
         background: rgba($color: $theme-white, $alpha: 0.7);
         padding: 38px 35px;
@@ -102,6 +105,7 @@
               }
             }
           }
+          
           .feature-1-card-empty-fallback {
             height: 100%;
             border-radius: 10px;
@@ -152,11 +156,13 @@
                 }
               }
             }
+            
             .fallback-bottom-wrapper {
               .fallback-text {
                 color: rgba(33, 33, 33, 0.7);
                 font-size: 14px;
                 font-weight: 400;
+                
                 span {
                   font-weight: 600;
                 }
@@ -165,6 +171,7 @@
                 width: 100%;
                 border-radius: 8px;
                 margin-top: 18px;
+
                 svg {
                   margin-right: 10px;
                 }
@@ -183,6 +190,7 @@
             width: 128px;
             height: 128px;
           }
+          
           .view-analytics-link {
             position: absolute;
             color: $theme-info;
@@ -217,20 +225,24 @@
 
         &.feature-3 {
           padding: 14px;
+          
           &:hover {
             cursor: pointer;
             .header {
               .company-logo-container {
                 transition: all 300ms linear;
                 transform: scale(1.1);
+                
                 img {
                   transition: all 300ms linear;
-                  // transform: scale(1.1);
+                  // transform: scale(1.1); // Keep this commented if not needed
                 }
+                
                 outline: 2px solid rgba(76, 81, 163, 0.1);
               }
             }
           }
+          
           .header {
             height: 110px;
             width: 100%;
@@ -238,12 +250,7 @@
             border: 1px solid rgba(33, 33, 33, 0.1);
             position: relative;
             overflow: clip;
-            background: linear-gradient(
-              90deg,
-              #fff 25.19%,
-              rgba(174, 176, 237, 0.32) 125.95%
-            );
-
+            background: linear-gradient(90deg, #fff 25.19%, rgba(174, 176, 237, 0.32) 125.95%);
             margin-bottom: 12px;
 
             .company-logo-container {
@@ -254,18 +261,21 @@
               height: 62px;
               border-radius: 6px;
               overflow: clip;
+
               img {
                 width: 100%;
                 object-fit: contain;
               }
             }
           }
+          
           .title {
             color: #212121;
             font-size: 14px;
             font-weight: 600;
             margin-bottom: 6px;
           }
+          
           .sub-title {
             color: rgba(33, 33, 33, 0.7);
             font-size: 14px;
@@ -279,8 +289,7 @@
   .dashboard-body {
     margin-top: 33px;
     display: flex;
-    // display: grid;
-    // grid-template-columns: repeat(2, 1fr);
+    // Removed the commented out display property
     gap: 32px;
 
     .data-container-title {
@@ -294,11 +303,13 @@
         font-size: 18px;
         font-weight: 600;
       }
+      
       .draft-mail-button {
         color: $theme-info;
         font-family: "Poppins", sans-serif;
         font-size: 15px;
         font-weight: 600;
+        
         svg {
           margin-left: 6px;
         }
@@ -320,10 +331,12 @@
         align-items: center;
         flex-direction: column;
         height: calc(100% - 110px);
+        
         .urban-no-data-found {
           width: 272px;
           height: 204px;
         }
+        
         .text {
           color: rgba($theme-text, 0.6);
           font-size: 16px;
@@ -334,6 +347,7 @@
 
       .latest-candidates-table {
         border: none;
+
         .MuiDataGrid-main {
           .MuiDataGrid-virtualScroller {
             height: 320px;
@@ -342,6 +356,7 @@
             font-weight: 400;
             line-height: 110%; /* 13.2px */
           }
+          
           .row-index {
             color: $theme-text;
             font-size: 14px;
@@ -349,6 +364,7 @@
             line-height: 140%; /* 19.6px */
             margin-right: 20px;
           }
+          
           .name {
             color: $theme-text;
             font-size: 14px;
@@ -356,16 +372,19 @@
             line-height: 110%;
             cursor: pointer;
           }
+          
           .email {
             color: $theme-text;
             font-size: 12px;
             font-weight: 400;
             line-height: 140%; /* 16.8px */
           }
+          
           .MuiDataGrid-columnHeaders {
             margin: 0px;
             border-radius: 4px;
           }
+          
           .MuiDataGrid-row--lastVisible {
             border: none;
           }
@@ -393,33 +412,38 @@
         .legend {
           display: flex;
           gap: 8px;
+
           .color {
             width: 12px;
             height: 100%;
             border-radius: 3px;
           }
+          
           .job-name {
             color: $theme-secondary;
             font-size: 12px;
             font-weight: 600;
           }
         }
+        
         .legend:nth-child(1) {
           .color {
             background: #8a6dff;
           }
         }
+        
         .legend:nth-child(2) {
           .color {
             background: #72a2ff;
           }
         }
+        
         .legend:nth-child(3) {
           .color {
             background: #75deff;
           }
         }
-      }
-    }
-  }
+      }
+    }
+  }
 }

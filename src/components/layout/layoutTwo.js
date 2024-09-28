@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"; 
-import DashboardJobAnalytics from "../components/Dashboard/v2/DashboardJobAnalytics";
-import Hero from "../components/Dashboard/v2/Hero";
-import layoutTwo from "../components/layout/layoutTwo";
+import DashboardJobAnalytics from "../../components/Dashboard/v2/DashboardJobAnalytics";
+import Hero from "../../components/Dashboard/v2/Hero";
+import layoutTwo from "../../components/layout/layoutTwo";
 
 const Dashboard = () => {
   const [dashboardHomeData, setDashboardHomeData] = useState(null);

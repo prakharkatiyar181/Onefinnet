@@ -1,54 +1,65 @@
 import { Icon } from "@iconify/react";
 import { ResponsivePie } from "@nivo/pie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Lottie from "react-lottie";
-import WorkingOnLaptopAnimation from "../../../assets/lottie/working_on_laptop.json";
-import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
-import { getAiCredits } from "../../../redux/slices/dashboardSlices/getAiCreditsSlice";
-import { getFirmDetails } from "../../../redux/slices/JobSlices/getFirmDetailsSlice";
-import { DashboardHomeData } from "../../../redux/slices/dashboardSlices/getDashboardHomeSlice";
-import { getPrivateJobBoardUrl } from "../../../redux/slices/JobSlices/getPrivateJobBoardUrl";
-import { Button } from "@mui/material";
+import Lottie from "react-lottie"; 
+import SparkleAnimation from '../../../assets/lottie/sparkle.json'; // Ensure this file exists in the correct directory
+import WorkingOnLaptopAnimation from '../../../assets/lottie/manWorking.json'; // Keep this if you're using an external URL
+import { Button } from "@mui/material"; // Ensure this import is present
 
 const GATEWAY_BASE = process.env.REACT_APP_API_GATEWAY_BASE;
 const JOBS_BASE =
-  GATEWAY_BASE == "https://api.dev.ecndev.io"
+  GATEWAY_BASE === "https://api.dev.ecndev.io"
     ? "https://jobs.dev.ecndev.io"
     : "https://jobs.onefinnet.com";
 const IMAGE_BASE = process.env.REACT_APP_IMG_BASE;
 
 type HeroProps = {
-  totalJobs: DashboardHomeData["total_jobs"];
-  totalApplicants: DashboardHomeData["total_applicants"];
-  totalApplicantsNotReviewed: DashboardHomeData["total_applicants_not_reviewed"];
+  totalJobs: number;
+  totalApplicants: number;
+  totalApplicantsNotReviewed: number;
 };
 
-const Hero = ({
-  totalJobs,
-  totalApplicants,
-  totalApplicantsNotReviewed
-}: HeroProps) => {
-  const dispatch = useAppDispatch();
+const Hero = ({ totalJobs, totalApplicants, totalApplicantsNotReviewed }: HeroProps) => {
+  const [firmDetailsData, setFirmDetailsData] = useState(null);
+  const [aiCredits, setAiCredits] = useState(null);
+  const [userInfo, setUserInfo] = useState({ first_name: "" });
+  const [privateJobBoardUrl, setPrivateJobBoardUrl] = useState("");
   const navigate = useNavigate();
-  const { firmDetailsData } = useAppSelector(
-    (state: any) => state.getFirmDetailsData
-  );
-  const { aiCredits } = useAppSelector((state: any) => state.getAiCredits);
-  const credits = aiCredits?.total_available_credits;
-  const { userInfo } = useAppSelector((state) => state.userDetails);
-  const { privateJobBoardUrl } = useAppSelector(
-    (state) => state.getPrivateJobBoardUrl
-  );
-  const formattedCredits = credits
-    ? new Intl.NumberFormat("en-us").format(credits)
-    : null;
-  const isPieEmpty = totalApplicantsNotReviewed == 0 && totalApplicants == 0;
 
+  const formattedCredits = aiCredits ? new Intl.NumberFormat("en-us").format(aiCredits) : null;
+  const isPieEmpty = totalApplicantsNotReviewed === 0 && totalApplicants === 0;
+
+  // Fetching data instead of using Redux
   useEffect(() => {
-    dispatch(getFirmDetails());
-    dispatch(getAiCredits());
-    dispatch(getPrivateJobBoardUrl());
+    const fetchFirmDetails = async () => {
+      const response = await fetch("/api/firm-details"); // Replace with actual API
+      const data = await response.json();
+      setFirmDetailsData(data);
+    };
+
+    const fetchAiCredits = async () => {
+      const response = await fetch("/api/ai-credits"); // Replace with actual API
+      const data = await response.json();
+      setAiCredits(data?.total_available_credits);
+    };
+
+    const fetchUserInfo = async () => {
+      const response = await fetch("/api/user-info"); // Replace with actual API
+      const data = await response.json();
+      setUserInfo(data);
+    };
+
+    const fetchPrivateJobBoardUrl = async () => {
+      const response = await fetch("/api/private-job-board-url"); // Replace with actual API
+      const data = await response.json();
+      setPrivateJobBoardUrl(data?.suggested_url);
+    };
+
+    fetchFirmDetails();
+    fetchAiCredits();
+    fetchUserInfo();
+    fetchPrivateJobBoardUrl();
   }, []);
 
   return (
@@ -56,13 +67,13 @@ const Hero = ({
       <div className="card">
         <h2>Welcome back, {userInfo.first_name || ""}</h2>
         <p>
-          Here's whats changed in your talent hunt journey! You can evaluate
+          Here's what's changed in your talent hunt journey! You can evaluate
           candidates, attract job seekers, and redefine the candidate experience
           for a new era of your workspace from here
         </p>
         <img
           className="wave-image"
-          src={${IMAGE_BASE || ""}/enterprise/3d-glassyl-silky-waves.png}
+          src={`${IMAGE_BASE || ""}/enterprise/3d-glassyl-silky-waves.png`}
           alt="Background image"
           style={{ opacity: "0.4" }}
         />
@@ -70,20 +81,13 @@ const Hero = ({
 
       <div className="feature-list">
         <div className="feature feature-1">
-          {totalJobs == 0 ? (
+          {totalJobs === 0 ? (
             <div className="feature-1-card-empty-fallback">
               <div className="stats-wrapper">
                 <div className="stats-item">
                   <div>
-                    <div
-                      className="icon-wrapper"
-                      style={{ background: "#0034bb" }}
-                    >
-                      <Icon
-                        icon="lucide:briefcase-business"
-                        width={18}
-                        height={18}
-                      />
+                    <div className="icon-wrapper" style={{ background: "#0034bb" }}>
+                      <Icon icon="lucide:briefcase-business" width={18} height={18} />
                     </div>
                   </div>
                   <div className="stats">
@@ -93,10 +97,7 @@ const Hero = ({
                 </div>
                 <div className="stats-item">
                   <div>
-                    <div
-                      className="icon-wrapper"
-                      style={{ background: "#C09F80" }}
-                    >
+                    <div className="icon-wrapper" style={{ background: "#C09F80" }}>
                       <Icon icon="lucide:users" width={18} height={18} />
                     </div>
                   </div>
@@ -108,8 +109,7 @@ const Hero = ({
               </div>
               <div className="fallback-bottom-wrapper">
                 <div className="fallback-text">
-                  It seems like you haven't yet hosted a job!{" "}
-                  <span>Create Now</span>
+                  It seems like you haven't yet hosted a job! <span>Create Now</span>
                 </div>
                 <Button
                   onClick={() => navigate("/job-creations?view=basic-details")}
@@ -126,15 +126,8 @@ const Hero = ({
               <div className="feature-1-card">
                 <div className="feature-1-card-item">
                   <div>
-                    <div
-                      className="icon-wrapper"
-                      style={{ background: "#0034bb" }}
-                    >
-                      <Icon
-                        icon="lucide:briefcase-business"
-                        width={18}
-                        height={18}
-                      />
+                    <div className="icon-wrapper" style={{ background: "#0034bb" }}>
+                      <Icon icon="lucide:briefcase-business" width={18} height={18} />
                     </div>
                   </div>
                   <div className="stats">
@@ -144,10 +137,7 @@ const Hero = ({
                 </div>
                 <div className="feature-1-card-item">
                   <div>
-                    <div
-                      className="icon-wrapper"
-                      style={{ background: "#C09F80" }}
-                    >
+                    <div className="icon-wrapper" style={{ background: "#C09F80" }}>
                       <Icon icon="lucide:users" width={18} height={18} />
                     </div>
                   </div>
@@ -160,10 +150,7 @@ const Hero = ({
               <div className="feature-1-card">
                 <div className="feature-1-card-item">
                   <div>
-                    <div
-                      className="icon-wrapper"
-                      style={{ background: "#6578FC" }}
-                    >
+                    <div className="icon-wrapper" style={{ background: "#6578FC" }}>
                       <Icon icon="lucide:ticket-check" width={18} height={18} />
                     </div>
                   </div>
@@ -190,9 +177,7 @@ const Hero = ({
                   {
                     id: "Reviewed",
                     label: "Reviewed",
-                    value: isPieEmpty
-                      ? 1
-                      : totalApplicants - totalApplicantsNotReviewed,
+                    value: isPieEmpty ? 1 : totalApplicants - totalApplicantsNotReviewed,
                     color: "hsl(258, 61%, 62%)"
                   },
                   {
@@ -217,19 +202,13 @@ const Hero = ({
           <div className="chart-color-lables-container">
             <div className="lable">
               <div>
-                <div
-                  className="color-chip"
-                  style={{ background: "rgba(133, 98, 216, 1)" }}
-                />
+                <div className="color-chip" style={{ background: "rgba(133, 98, 216, 1)" }} />
               </div>
               <div className="text">Reviewed</div>
             </div>
             <div className="lable">
               <div>
-                <div
-                  className="color-chip"
-                  style={{ background: "rgba(217, 217, 217, 1)" }}
-                />
+                <div className="color-chip" style={{ background: "rgba(217, 217, 217, 1)" }} />
               </div>
               <div className="text">Not Reviewed</div>
             </div>
@@ -238,10 +217,7 @@ const Hero = ({
         <div
           onClick={() => {
             if (privateJobBoardUrl) {
-              window.open(
-                ${JOBS_BASE}/${privateJobBoardUrl?.suggested_url || ""},
-                "_blank"
-              );
+              window.open(`${JOBS_BASE}/${privateJobBoardUrl}`, "_blank");
             }
           }}
           className="feature feature-3"
@@ -267,17 +243,14 @@ const Hero = ({
             />
             <div className="company-logo-container">
               {firmDetailsData?.display_picture && (
-                <img
-                  src={firmDetailsData?.display_picture}
-                  alt="Company logo"
-                />
+                <img src={firmDetailsData?.display_picture} alt="Company logo" />
               )}
             </div>
           </div>
           <div className="title">Private Job Board</div>
           <div className="sub-title">
-            Your private job postings will appear here, accessible to the public
-            via a company-specific URL.
+            Your private job postings will appear here, accessible to the public via a
+            company-specific URL.
           </div>
         </div>
       </div>
@@ -285,4 +258,4 @@ const Hero = ({
   );
 };
 
-export default Hero;
+export default Hero;
