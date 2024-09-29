@@ -2,7 +2,6 @@ import React from 'react';
 import Lottie from 'react-lottie';  // Import Lottie animation component
 import { Icon } from "@iconify/react";
 import { ResponsivePie } from "@nivo/pie";
-import { Button } from "@mui/material"; // Ensure this import is present
 import WorkingOnLaptopAnimation from "../../assets/lottie/working_on_laptop.json";
 
 const Hero = () => {

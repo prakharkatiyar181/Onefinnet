@@ -1,8 +1,6 @@
 import React from 'react';
-import { Icon } from "@iconify/react";
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
-import moment from "moment";
 
 const colors = ["#75DEFF", "#72A2FF", "#8A6DFF"];
 
