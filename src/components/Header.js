@@ -33,7 +33,7 @@ const Header = () => {
           <li>
             <IconButton style={{ maxWidth: "40px", maxHeight: "40px" }}>
               <Avatar
-                src="https://via.placeholder.com/150" // Replace with a valid image URL
+                src="https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2283" // Replace with a valid image URL
                 alt="User Avatar"
                 className="avatar"
               />
