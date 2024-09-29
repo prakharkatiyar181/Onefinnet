@@ -7,12 +7,13 @@ import { FiSearch } from "react-icons/fi";
 const Header = () => {
   return (
     <div className="header">
-      <div className="left">
-        <p>
-          <b>
-            OneFinnet
-          </b>
-        </p>
+      <div className="left" style={{ alignItems: "center", display: "flex"}}>
+        <img 
+          src={require('../assets/img/logo.png')} 
+          alt="logo"   
+          style={{ width: "25px", height: "auto", marginRight: "10px" }} // Inline style (optional)
+        />
+        <b>Onefinnet</b>
       </div>
       <div className="right">
         <ul>
@@ -30,16 +31,12 @@ const Header = () => {
             <PiDotsNineBold style={{ width: "22px", height: "22px" }} />
           </li>
           <li>
-            <IconButton
-              style={{ maxWidth: "40px", maxHeight: "40px" }}
-            >
-            <Avatar
-              src={
-                "https://www.google.com/url?sa=i&url=https%3A%2F%2Fuxwing.com%2Fman-person-icon%2F&psig=AOvVaw0XvyJtwTbRlO3Wbz5r-cdA&ust=1727633991141000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPCf5KWg5ogDFQAAAAAdAAAAABAE"
-              }
-              alt="E"
-              className="avatar"
-            />
+            <IconButton style={{ maxWidth: "40px", maxHeight: "40px" }}>
+              <Avatar
+                src="https://via.placeholder.com/150" // Replace with a valid image URL
+                alt="User Avatar"
+                className="avatar"
+              />
             </IconButton>
           </li>
         </ul>
@@ -48,4 +45,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header;
