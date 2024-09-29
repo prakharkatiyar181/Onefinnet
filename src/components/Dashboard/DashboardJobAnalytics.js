@@ -92,7 +92,7 @@ const DashboardJobAnalytics = () => {
               <TableRow>
                 <TableCell style={{ backgroundColor: '#f0f0f0', fontSize: '13px' }}><b>Candidate Name</b></TableCell>
                 <TableCell style={{ backgroundColor: '#f0f0f0', fontSize: '13px' }}><b>Job Name</b></TableCell>
-                <TableCell style={{ backgroundColor: '#f0f0f0', fontSize: '13px' }}><b>AI Rating</b></TableCell>
+                <TableCell style={{ backgroundColor: '#f0f0f0', fontSize: '13px' }}><b>Rating</b></TableCell>
                 <TableCell style={{ backgroundColor: '#f0f0f0', fontSize: '13px' }}><b>Applied Date</b></TableCell>
               </TableRow>
             </TableHead>

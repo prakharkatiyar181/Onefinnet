@@ -1,6 +1,6 @@
 import { Avatar, IconButton } from "@mui/material";
-import { FaRegBell } from "react-icons/fa";
-import { IoSettingsOutline } from "react-icons/io5";
+import { FiBell } from "react-icons/fi";
+import { PiGearSixBold } from "react-icons/pi";
 import { PiDotsNineBold } from "react-icons/pi";
 import { FiSearch } from "react-icons/fi";
 
@@ -22,10 +22,10 @@ const Header = () => {
             Start Searching
           </li>
           <li>
-            <FaRegBell style={{ width: "22px", height: "22px" }} />
+            <FiBell  style={{ width: "22px", height: "22px" }} />
           </li>
           <li>
-            <IoSettingsOutline style={{ width: "22px", height: "22px" }} />
+            <PiGearSixBold style={{ width: "22px", height: "22px" }} />
           </li>
           <li>
             <PiDotsNineBold style={{ width: "22px", height: "22px" }} />

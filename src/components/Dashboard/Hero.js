@@ -68,15 +68,15 @@ const Hero = () => {
                 colors={{ datum: "data.color" }}
                 data={[
                   {
-                    id: "Reviewed",
-                    label: "Reviewed",
-                    value: 27,
+                    id: "Not Reviewed",
+                    label: "Not Reviewed",
+                    value: 29,
                     color: "hsl(258, 61%, 62%)"
                   },
                   {
-                    id: "Not Reviewed",
-                    label: "Not Reviewed",
-                    value: 73,
+                    id: "Total Applicants",
+                    label: "Total Applicants",
+                    value: 71,
                     color: "rgba(33, 33, 33, 0.1)"
                   }
                 ]}
@@ -86,13 +86,13 @@ const Hero = () => {
           <div className="chart-color-lables-container">
             <div className="lable">
               <div>
-                <div className="color-chip" style={{ background: "rgba(133, 98, 216, 1)" }} />
-              </div>
-              <div className="text">Reviewed</div>
+                <div className="color-chip" style={{ background: "rgba(217, 217, 217, 1)" }} />
+                </div>
+              <div className="text">Total Applicants</div>
             </div>
             <div className="lable">
               <div>
-                <div className="color-chip" style={{ background: "rgba(217, 217, 217, 1)" }} />
+                <div className="color-chip" style={{ background: "rgba(133, 98, 216, 1)" }} />
               </div>
               <div className="text">Not Reviewed</div>
             </div>
