@@ -2,22 +2,32 @@ import { Avatar, IconButton } from "@mui/material";
 import { FaRegBell } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { PiDotsNineBold } from "react-icons/pi";
+import { FiSearch } from "react-icons/fi";
+
 const Header = () => {
   return (
     <div className="header">
       <div className="left">
-        <p>OneFinnet</p>
+        <p>
+          <b>
+            OneFinnet
+          </b>
+        </p>
       </div>
       <div className="right">
         <ul>
           <li>
-            <FaRegBell />
+            <FiSearch style={{ width: "22px", height: "22px" }} />
+            Start Searching
           </li>
           <li>
-            <IoSettingsOutline />
+            <FaRegBell style={{ width: "22px", height: "22px" }} />
           </li>
           <li>
-            <PiDotsNineBold />
+            <IoSettingsOutline style={{ width: "22px", height: "22px" }} />
+          </li>
+          <li>
+            <PiDotsNineBold style={{ width: "22px", height: "22px" }} />
           </li>
           <li>
             <IconButton

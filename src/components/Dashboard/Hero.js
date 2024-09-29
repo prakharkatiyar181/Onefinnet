@@ -1,13 +1,16 @@
+import React from 'react';
+import Lottie from 'react-lottie';  // Import Lottie animation component
 import { Icon } from "@iconify/react";
 import { ResponsivePie } from "@nivo/pie";
 import { Button } from "@mui/material"; // Ensure this import is present
+import WorkingOnLaptopAnimation from "../../assets/lottie/working_on_laptop.json";
 
 const Hero = () => {
   return (
     <div className="dashboard-hero">
       <div className="card">
-        <h2>Welcome back, Recruiter</h2>
-        <p>
+        <h2 style={{ margin: "0" }}>Welcome back, Recruiter</h2>
+        <p style={{ margin: "0" }}>
           Here's what's changed in your talent hunt journey! You can evaluate
           candidates, attract job seekers, and redefine the candidate experience
           for a new era of your workspace from here
@@ -80,12 +83,6 @@ const Hero = () => {
                 ]}
               />
             </div>
-            <Button
-              className="view-analytics-link"
-            >
-              <div>View Analytics</div>
-              <Icon icon="lucide:chevron-right" width={20} height={20} />
-            </Button>
           </div>
           <div className="chart-color-lables-container">
             <div className="lable">
@@ -106,8 +103,26 @@ const Hero = () => {
           className="feature feature-3"
         >
           <div className="header">
+            <Lottie
+              style={{
+                position: "absolute",
+                left: -34,
+                top: -5
+              }}
+              speed={0.5}
+              options={{
+                loop: true,
+                autoplay: true,
+                animationData: WorkingOnLaptopAnimation,
+                rendererSettings: {
+                  preserveAspectRatio: "xMidYMid slice"
+                }
+              }}
+              width={178}
+              height={124}
+            />
             <div className="company-logo-container">
-              <img src="https://blogs.microsoft.com/wp-content/uploads/prod/2012/08/8867.Microsoft_5F00_Logo_2D00_for_2D00_screen-1920x706.jpg" alt="Company logo" />
+              <img src="https://cdn.pixabay.com/photo/2022/01/27/07/17/microsoft-teams-6971301_1280.png" alt="Company logo" />
             </div>
           </div>
           <div className="title">Private Job Board</div>

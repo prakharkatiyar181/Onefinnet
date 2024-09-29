@@ -10,7 +10,7 @@
         <Header />
         <div className="page">
           <Sidebar />
-          <div className="page-right" style={{ marginTop: '56px' }}>
+          <div className="page-right">
             <Dashboard />
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa"
+import { FiHome } from "react-icons/fi";
 
 const NewSideBar = () => {
   return (
@@ -10,7 +10,7 @@ const NewSideBar = () => {
                 to=""
                 className="top-head active"
               >
-                {<FaHome />}
+                <FiHome style={{ width: "24px", height: "24px" }} />
                 {"Dashboard"}
               </Link>
           </div>
